@@ -20,7 +20,19 @@ export function MintArea({ contract }) {
 
   const MAX_SUPPLY = 6000;
   const web3 = window.ethereum ? new Web3(window.ethereum) : null;
-  const mainCont = new web3.eth.Contract(ClassicRewards.abi, ClassicRewards.address);
+  if(!web3) {
+    toast.error("please, setup Metamask", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
+  const mainCont = web3 ? new web3.eth.Contract(ClassicRewards.abi, ClassicRewards.address) : {};
 
   useEffect(() => {
     (async () => {
