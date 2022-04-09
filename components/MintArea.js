@@ -39,7 +39,10 @@ export function MintArea({ contract }) {
       // console.log("CONTRACT: ", contract);
       if (contract) {
         try {
-          const _isPaused = await mainCont.methods.paused().call();
+          let _isPaused = false;
+          if (mainCont != {}) {
+            _isPaused = await mainCont.methods.paused().call();
+          }         
           console.log(_isPaused);
           setIsPaused(_isPaused);
         } catch (e) {
@@ -58,9 +61,14 @@ export function MintArea({ contract }) {
         }
 
         try {
-          const _total = await mainCont.methods.totalSupply().call();
+          let _total = 0;
+          if(mainCont != {}) {
+            _total = Number(await mainCont.methods.totalSupply().call());
+          } else {
+            _total = 150;
+          }
           console.log(_total);
-          setTotalSupply(Number(_total));
+          setTotalSupply(_total);
         } catch (e) {
           // alert("TODO message");
           console.log("Error: ", e);
@@ -176,7 +184,12 @@ export function MintArea({ contract }) {
     try {
       setLoadingTx(true);
       const currentTimestamp = new Date().getTime();
-      let mintedAmount = await mainCont.methods.totalSupply().call();
+      let mintedAmount = 0;
+      if(mainCont != {}) {
+        mintedAmount = Number(await mainCont.methods.totalSupply().call());
+      } else {
+        mintedAmount = 150;
+      }      
       const tx = await publicMint();
       setAmount(1);
       const receipt = await tx.wait();
@@ -187,7 +200,7 @@ export function MintArea({ contract }) {
       } else {
         console.log("transaction failed!");
       }
-      setTotalSupply(Number(mintedAmount));
+      setTotalSupply(mintedAmount);
     } catch (error) {
       setLoadingTx(false);
       let errorMsg = error.hasOwnProperty("error") ? error.error : error;
@@ -229,7 +242,13 @@ export function MintArea({ contract }) {
     // );
 
     console.log(contract);
-    const tokenPrice = await ethers.BigNumber.from(await mainCont.methods.cost().call());
+    let tokenPrice;
+    if(mainCont != {}) {
+      tokenPrice = await ethers.BigNumber.from(await mainCont.methods.cost().call());
+    } else {
+      tokenPrice = await ethers.BigNumber.from({_hex: '0x03782dace9d90000', _isBigNumber: true});
+    }
+    
     console.log(tokenPrice);
 
     // const val = (tokenPrice * amount)
