@@ -65,7 +65,7 @@ export function MintArea({ contract }) {
           if(mainCont != {}) {
             _total = Number(await mainCont.methods.totalSupply().call());
           } else {
-            _total = 150;
+            _total = 1050;
           }
           console.log(_total);
           setTotalSupply(_total);
@@ -188,7 +188,7 @@ export function MintArea({ contract }) {
       if(mainCont != {}) {
         mintedAmount = Number(await mainCont.methods.totalSupply().call());
       } else {
-        mintedAmount = 150;
+        mintedAmount = 1050;
       }      
       const tx = await publicMint();
       setAmount(1);

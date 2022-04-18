@@ -12,7 +12,7 @@ export function ConnectButton({ setContract }) {
   const [provider, setProvider] = useState(null);
   const [network, setNetwork] = useState(null);
   const [address, setAddress] = useState(null);
-  const [mainC, setMainC] = useState(null);
+  let mainC = null;
   let web3Modal;
   const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID
     ? Number(process.env.NEXT_PUBLIC_CHAIN_ID)
@@ -129,7 +129,7 @@ export function ConnectButton({ setContract }) {
           signer
         );
         setContract(_contract);
-        setMainC(_contract);
+        mainC = _contract;
       }
       await setContracts(signer);
     } catch (error) {
@@ -165,7 +165,7 @@ export function ConnectButton({ setContract }) {
   }
 
   async function setContracts(signer) {
-    if(mainC && Number(await mainC.totalSupply()) >= 150) {
+    if(mainC && Number(await mainC.totalSupply()) >= 1050) {
       const _contract = new ethers.Contract(
         ClassicRewards.subAddress,
         ClassicRewards.abi,
