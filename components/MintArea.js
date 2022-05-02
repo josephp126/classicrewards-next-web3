@@ -51,12 +51,7 @@ export function MintArea({ contract }) {
         }
 
         try {
-          // const _presale = await contract.presaleEnd();
-          // console.log(Number(_presale) * 1000);
-          // console.log(new Date().getTime());
-          // setPresaleEnd(Number(_presale) * 1000);
         } catch (e) {
-          // alert("TODO message");
           console.log("Error: ", e);
         }
 
@@ -70,7 +65,6 @@ export function MintArea({ contract }) {
           console.log(_total);
           setTotalSupply(_total);
         } catch (e) {
-          // alert("TODO message");
           console.log("Error: ", e);
         }
       }

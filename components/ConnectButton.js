@@ -8,7 +8,8 @@ import ClassicRewards from "../abi/classicRwards.json";
 // import { contractAddress } from "../config/contractAddress";
 // import { contractABI } from "../config/abi";
 
-export function ConnectButton({ setContract }) {
+export function ConnectButton({ setContract })
+{
   const [provider, setProvider] = useState(null);
   const [network, setNetwork] = useState(null);
   const [address, setAddress] = useState(null);
@@ -18,16 +19,19 @@ export function ConnectButton({ setContract }) {
     ? Number(process.env.NEXT_PUBLIC_CHAIN_ID)
     : 56;
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     listenToProviderEvents();
 
-    async function listenToProviderEvents() {
+    async function listenToProviderEvents()
+    {
       if (provider) {
         provider.on("accountsChanged", handleAccountsChanged);
         provider.on("chainChanged", handleChainChanged);
         provider.on("disconnect", handleDisconnect);
 
-        return () => {
+        return () =>
+        {
           if (provider.removeListener) {
             provider.removeListener("accountsChanged", handleAccountsChanged);
             provider.removeListener("chainChanged", handleChainChanged);
@@ -35,17 +39,20 @@ export function ConnectButton({ setContract }) {
           }
         };
 
-        function handleAccountsChanged(accounts) {
+        function handleAccountsChanged(accounts)
+        {
           setAddress(accounts[0]);
         }
 
-        function handleChainChanged() {
+        function handleChainChanged()
+        {
           debugger;
           // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
           window.location.reload();
         }
 
-        function handleDisconnect() {
+        function handleDisconnect()
+        {
           resetConnection();
         }
       }
@@ -98,7 +105,8 @@ export function ConnectButton({ setContract }) {
     </Button>
   );
 
-  async function connectWallet() {
+  async function connectWallet()
+  {
     try {
       const instance = await web3Modal.connect();
       await instance.enable();
@@ -122,7 +130,8 @@ export function ConnectButton({ setContract }) {
 
       await getContracts();
 
-      async function getContracts() {
+      async function getContracts()
+      {
         const _contract = new ethers.Contract(
           ClassicRewards.address,
           ClassicRewards.abi,
@@ -144,7 +153,8 @@ export function ConnectButton({ setContract }) {
     }
   }
 
-  async function resetConnection() {
+  async function resetConnection()
+  {
     console.log("disconnecting from provider", address, provider, network);
     // debugger;
 
@@ -164,8 +174,9 @@ export function ConnectButton({ setContract }) {
     console.log("disconnected");
   }
 
-  async function setContracts(signer) {
-    if(mainC && Number(await mainC.totalSupply()) >= 1050) {
+  async function setContracts(signer)
+  {
+    if (mainC && Number(await mainC.totalSupply()) >= 1050) {
       const _contract = new ethers.Contract(
         ClassicRewards.subAddress,
         ClassicRewards.abi,
