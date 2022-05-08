@@ -9,7 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ClassicRewards from "../abi/classicRwards.json"
 import Web3 from "web3";
 
-export function MintArea({ contract }) {
+export function MintArea({ contract })
+{
   const [amount, setAmount] = useState(1);
   const [mintMore, setMintMore] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -20,7 +21,7 @@ export function MintArea({ contract }) {
 
   const MAX_SUPPLY = 6000;
   const web3 = window.ethereum ? new Web3(window.ethereum) : null;
-  if(!web3) {
+  if (!web3) {
     toast.error("please, setup Metamask", {
       position: "top-center",
       autoClose: 5000,
@@ -34,15 +35,17 @@ export function MintArea({ contract }) {
 
   const mainCont = web3 ? new web3.eth.Contract(ClassicRewards.abi, ClassicRewards.address) : {};
 
-  useEffect(() => {
-    (async () => {
+  useEffect(() =>
+  {
+    (async () =>
+    {
       // console.log("CONTRACT: ", contract);
       if (contract) {
         try {
           let _isPaused = false;
           if (mainCont != {}) {
             _isPaused = await mainCont.methods.paused().call();
-          }         
+          }
           console.log(_isPaused);
           setIsPaused(_isPaused);
         } catch (e) {
@@ -57,7 +60,7 @@ export function MintArea({ contract }) {
 
         try {
           let _total = 0;
-          if(mainCont != {}) {
+          if (mainCont != {}) {
             _total = Number(await mainCont.methods.totalSupply().call());
           } else {
             _total = 1050;
@@ -162,7 +165,8 @@ export function MintArea({ contract }) {
     </>
   );
 
-  async function onMint(amount) {
+  async function onMint(amount)
+  {
     if (Number(amount) <= 0 || Number(amount) + totalSupply > MAX_SUPPLY) {
       toast.error("Not valid Amount", {
         position: "top-center",
@@ -179,11 +183,11 @@ export function MintArea({ contract }) {
       setLoadingTx(true);
       const currentTimestamp = new Date().getTime();
       let mintedAmount = 0;
-      if(mainCont != {}) {
+      if (mainCont != {}) {
         mintedAmount = Number(await mainCont.methods.totalSupply().call());
       } else {
         mintedAmount = 1050;
-      }      
+      }
       const tx = await publicMint();
       setAmount(1);
       const receipt = await tx.wait();
@@ -217,7 +221,7 @@ export function MintArea({ contract }) {
           draggable: true,
           progress: undefined,
         });
-      }        
+      }
       else {
         errorMsg = "";
         console.log(errorMsg);
@@ -226,8 +230,9 @@ export function MintArea({ contract }) {
   }
 
 
-  async function publicMint() {
-    
+  async function publicMint()
+  {
+
     // let amount_ = await ethers.BigNumber.from(amount);
 
     // let errorMargin = ethers.utils.parseUnits(String(30000 * amount), "wei");
@@ -237,12 +242,12 @@ export function MintArea({ contract }) {
 
     console.log(contract);
     let tokenPrice;
-    if(mainCont != {}) {
+    if (mainCont != {}) {
       tokenPrice = await ethers.BigNumber.from(await mainCont.methods.cost().call());
     } else {
-      tokenPrice = await ethers.BigNumber.from({_hex: '0x03782dace9d90000', _isBigNumber: true});
+      tokenPrice = await ethers.BigNumber.from({ _hex: '0x03782dace9d90000', _isBigNumber: true });
     }
-    
+
     console.log(tokenPrice);
 
     // const val = (tokenPrice * amount)
@@ -255,18 +260,20 @@ export function MintArea({ contract }) {
     });
   }
 
-  function handleInput(event) {
+  function handleInput(event)
+  {
     const value = event.target.value;
     setAmount(value);
   }
 
-  // function handleWhitelistFile(data, fileInfo) {
-  //   const content = JSON.stringify(data);
-  //   console.log(data);
-  //   console.log(fileInfo);
-  // }
+  function handleWhitelistFile(data, fileInfo) {
+    const content = JSON.stringify(data);
+    console.log(data);
+    console.log(fileInfo);
+  }
 }
 
-function getRandomNumber() {
+function getRandomNumber()
+{
   return Math.floor(Math.random() * 1000000);
 }
