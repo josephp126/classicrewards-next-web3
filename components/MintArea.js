@@ -251,9 +251,6 @@ export function MintArea({ contract })
     console.log(tokenPrice);
 
     // const val = (tokenPrice * amount)
-
-    // console.log("gasEstimation: ", ethers.utils.formatUnits(estimateGas, 9));
-    // console.log("errorMargin: ", ethers.utils.formatUnits(errorMargin, 9));
     console.log(contract);
     await contract.mint(amount, {
       value: tokenPrice.mul(amount),
