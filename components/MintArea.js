@@ -14,10 +14,8 @@ export function MintArea({ contract })
   const [amount, setAmount] = useState(1);
   const [mintMore, setMintMore] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  // const [presaleEnd, setPresaleEnd] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
   const [loadingTx, setLoadingTx] = useState(false);
-  // console.log("State: ", isPaused, presaleEnd);
 
   const MAX_SUPPLY = 6000;
   const web3 = window.ethereum ? new Web3(window.ethereum) : null;
