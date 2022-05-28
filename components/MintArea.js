@@ -261,14 +261,15 @@ export function MintArea({ contract })
     setAmount(value);
   }
 
-  function handleWhitelistFile(data, fileInfo) {
+  function handleWhitelistFile(data, fileInfo)
+  {
     const content = JSON.stringify(data);
     console.log(data);
     console.log(fileInfo);
   }
 }
 
-function getRandomNumber()
-{
-  return Math.floor(Math.random() * 1000000);
-}
+// function getRandomNumber()
+// {
+//   return Math.floor(Math.random() * 1000000);
+// }
