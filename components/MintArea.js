@@ -255,11 +255,11 @@ export function MintArea({ contract })
     });
   }
 
-  function handleInput(event)
-  {
-    const value = event.target.value;
-    setAmount(value);
-  }
+  // function handleInput(event)
+  // {
+  //   const value = event.target.value;
+  //   setAmount(value);
+  // }
 
   // function handleWhitelistFile(data, fileInfo)
   // {
