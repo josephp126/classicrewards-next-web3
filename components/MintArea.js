@@ -269,7 +269,7 @@ export function MintArea({ contract })
   }
 }
 
-function getRandomNumber()
-{
-  return Math.floor(Math.random() * 1000000);
-}
+// function getRandomNumber()
+// {
+//   return Math.floor(Math.random() * 1000000);
+// }
